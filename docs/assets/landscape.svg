@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="860" viewBox="0 0 780 860">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d6d9cd"/><stop offset="1" stop-color="#f2efdf"/></linearGradient><linearGradient id="hill" x2="0.8" y2="1"><stop stop-color="#536f59"/><stop offset="1" stop-color="#233f32"/></linearGradient><pattern id="grain" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="1" cy="2" r=".5" fill="#fff" opacity=".1"/></pattern></defs>
+<path fill="url(#sky)" d="M0 0h780v860H0z"/><circle cx="563" cy="165" r="73" fill="#ede9cd"/>
+<path d="M0 375 102 237 173 320 291 170 440 351 522 266 690 405 780 298V655H0Z" fill="#a8b5a2"/><path d="m173 320 118-150 149 181-133-111-41 54-24-20Z" fill="#e1e2d5"/>
+<path d="m0 448 153-99 136 70 163-74 170 83 158-48v320H0Z" fill="#80967c"/>
+<path d="M0 540q115-140 283-41t497-65v426H0Z" fill="url(#hill)"/><path d="M780 500Q456 467 406 644T55 860h725Z" fill="#8eab9b"/><path d="M780 510Q475 474 426 646T87 860h693Z" fill="#b0bfb0"/><path d="M780 536Q483 503 452 663T150 860" fill="none" stroke="#d6ddc9" stroke-width="3" opacity=".65"/>
+<g fill="#264b39"><path d="m78 388-54 152h108Z"/><path d="m150 421-43 134h86Z"/><path d="m215 451-48 142h96Z"/></g>
+<path d="M0 618 780 724v136H0Z" fill="#c2bea9"/><path d="M0 648 780 754v106H0Z" fill="#d8d3be"/>
+<path d="M0 584 780 690" stroke="#183e31" stroke-width="11"/><g stroke="#244535" stroke-width="5"><path d="M30 587v84m117-68v84m118-67v84m117-68v84m118-67v84m117-68v84m118-67v84"/></g>
+<path d="M659 0h121v715l-88-13Z" fill="#163e31"/><path d="m681 0 64 706" stroke="#355642" stroke-width="5"/><g fill="#153f31"><ellipse cx="653" cy="68" rx="132" ry="97"/><ellipse cx="734" cy="158" rx="117" ry="109"/><ellipse cx="594" cy="174" rx="95" ry="72"/><ellipse cx="701" cy="280" rx="107" ry="100"/></g><g fill="#365a40"><ellipse cx="560" cy="54" rx="81" ry="41"/><ellipse cx="578" cy="147" rx="60" ry="37"/><ellipse cx="682" cy="258" rx="62" ry="40"/></g>
+<g stroke="#263d30" stroke-width="8" fill="none"><path d="m210 747-30 85m106-74 16 83m-96-78-13-72 109 16-13 72Z"/><path d="m397 772-13 75m94-63 15 69m-99-66-7-65 102 14-10 64Z"/></g><path d="m174 775 127 17 8-22-127-18Z" fill="#5c6850"/><path d="m381 800 114 15 1-21-109-16Z" fill="#5c6850"/>
+<path fill="url(#grain)" d="M0 0h780v860H0z"/>
+</svg>

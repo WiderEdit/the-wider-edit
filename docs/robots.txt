@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wideredit.github.io/the-wider-edit/sitemap.xml
