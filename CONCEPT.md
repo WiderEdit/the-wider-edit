@@ -7,8 +7,8 @@ Private, noncommercial personal blog from Georgia. Public author identity: **Chr
 - Forest green, paper white, graphite. Desktop and mobile.
 - Separate Russian and German editions. Browser language selects German when German; otherwise Russian. Explicit RU/DE links always visible. No stored language preference.
 - Equal main areas: Business, Leisure, Health. No public subcategories at launch.
-- No advertising, sponsored placements, affiliate remuneration, commercial calls to action, payments, contact forms, comments, subscriptions, tracking, or external widgets.
-- Only local assets and system fonts. GitHub Pages still processes visitor IP addresses for security; disclose this without claiming zero personal-data processing.
+- No advertising, sponsored placements, affiliate remuneration, commercial calls to action, payments, contact forms, comments, subscriptions, advertising trackers, or external widgets. GoatCounter is used for pageview counts without cookies; see Datenschutz.
+- Local images and system fonts; the only external script is the configured GoatCounter pageview counter. GitHub Pages still processes visitor IP addresses for security; disclose this without claiming zero personal-data processing.
 - About page in the footer, pseudonymous approved biography. Impressum in German and Georgian. Datenschutz in German.
 - Copyright Act Article 17(1)(b) supports use of a pseudonym; it does not establish a blanket exemption from operator-disclosure requirements. Legal applicability depends on actual circumstances.
 

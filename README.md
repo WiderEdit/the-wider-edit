@@ -2,7 +2,7 @@
 
 A private, noncommercial personal blog from Georgia, published under the pseudonym **Chris West**.
 
-Separate Russian and German editions; Business, Leisure and Health. Forest green and paper white, responsive layouts, local graphics, system fonts. No advertising, paid services, forms, comments, tracking or third-party embeds.
+Separate Russian and German editions; Business, Leisure and Health. Forest green and paper white, responsive layouts, local graphics, system fonts. No advertising, paid services, forms, comments, advertising trackers or third-party embeds. GoatCounter counts pageviews without cookies; its script is the sole external script.
 
 ## Build
 

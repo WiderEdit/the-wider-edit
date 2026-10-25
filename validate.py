@@ -31,7 +31,7 @@ for f in pages:
     assert a.get('target')=='_blank',(f,link)
     assert 'noopener' in a.get('rel','')
   if tag in ('script','img','link') and a.get('src',a.get('href','')).startswith('http'):
-   assert tag=='link' and a.get('rel') in ('canonical','alternate'),(f,'external dependency')
+   assert (tag=='link' and a.get('rel') in ('canonical','alternate')) or (tag=='script' and a.get('src')=='https://gc.zgo.at/count.js' and a.get('data-goatcounter')=='https://the-wider-edit.goatcounter.com/count'),(f,'unexpected external dependency')
  assert 'localStorage' not in text and 'sessionStorage' not in text
  assert 'Anna' not in text and 'Trocka' not in text
 print(f'PASS: {len(pages)} pages; headings, metadata, local links, external-link safety, privacy boundaries.')
