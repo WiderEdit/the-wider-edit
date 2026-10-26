@@ -3,10 +3,12 @@ from pathlib import Path
 import json
 from html import escape
 import sys
+import hashlib
 import beauty_pages
 
 ROOT = Path(__file__).parent
 OUT = ROOT / 'docs'
+CSS_VERSION = hashlib.sha256((OUT / 'assets/site.css').read_bytes()).hexdigest()[:12]
 BASE = '/the-wider-edit/'
 ORIGIN = 'https://wideredit.github.io'
 LAW = 'https://matsne.gov.ge/en/document/view/16198'
@@ -64,7 +66,7 @@ def shell(lang, title, desc, body, path, active='', alternate=None, noindex=Fals
   alts = ''.join(f'<link rel="alternate" hreflang="{l}" href="{ORIGIN}{url(p)}">' for l,p in alternate.items())
  schema = {'@context':'https://schema.org','@type':'WebPage','name':title,'url':ORIGIN+url(path),'inLanguage':lang,'isPartOf':{'@type':'WebSite','name':'The Wider Edit','url':ORIGIN+BASE}}
  return f'''<!doctype html>
-<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)} · The Wider Edit</title><meta name="description" content="{escape(desc,quote=True)}"><meta name="theme-color" content="#153e34"><link rel="canonical" href="{ORIGIN}{url(path)}">{alts}<meta property="og:title" content="{escape(title,quote=True)}"><meta property="og:description" content="{escape(desc,quote=True)}"><meta property="og:type" content="website"><meta property="og:url" content="{ORIGIN}{url(path)}"><meta property="og:site_name" content="The Wider Edit"><link rel="icon" href="{url('assets/mark.svg')}" type="image/svg+xml"><link rel="stylesheet" href="{url('assets/site.css')}">{'<meta name="robots" content="noindex,follow">' if noindex else ''}<script type="application/ld+json">{json.dumps(schema,ensure_ascii=False)}</script></head>
+<html lang="{lang}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{escape(title)} · The Wider Edit</title><meta name="description" content="{escape(desc,quote=True)}"><meta name="theme-color" content="#153e34"><link rel="canonical" href="{ORIGIN}{url(path)}">{alts}<meta property="og:title" content="{escape(title,quote=True)}"><meta property="og:description" content="{escape(desc,quote=True)}"><meta property="og:type" content="website"><meta property="og:url" content="{ORIGIN}{url(path)}"><meta property="og:site_name" content="The Wider Edit"><link rel="icon" href="{url('assets/mark.svg')}" type="image/svg+xml"><link rel="stylesheet" href="{url('assets/site.css')}?v={CSS_VERSION}">{'<meta name="robots" content="noindex,follow">' if noindex else ''}<script type="application/ld+json">{json.dumps(schema,ensure_ascii=False)}</script></head>
 <body><a class="skip" href="#main">{t['skip']}</a><header class="header"><div class="wrap top"><a class="brand" href="{url(lang+'/')}" aria-label="The Wider Edit — {t['home']}">The Wider Edit<span class="brand-dot">.</span></a><div class="edition"><span>{t['label']}</span><div class="languages" aria-label="Language"><a href="{url('ru/')}" lang="ru" {'aria-current="true"' if lang=='ru' else ''}>RU</a><span>/</span><a href="{url('de/')}" lang="de" {'aria-current="true"' if lang=='de' else ''}>DE</a></div></div></div><div class="wrap navrow"><nav aria-label="{'Разделы' if lang=='ru' else 'Themen'}">{nav}</nav><span class="navnote">A PERSONAL POINT OF VIEW</span></div></header>
 <main id="main">{body}</main>{COUNTER}<footer><div class="wrap footer-main"><a class="footer-brand" href="{url(lang+'/')}">The Wider Edit.</a><p>{t['written']}</p><nav aria-label="{'Информация' if lang=='ru' else 'Information'}"><a href="{url(lang+'/about/')}">{t['about']}</a><a href="{url('impressum/')}" lang="de">Impressum</a><a href="{url('datenschutz/')}" lang="de">Datenschutz</a></nav></div><div class="wrap footer-bottom"><span>© 2026 The Wider Edit</span><span>GEORGIA · A WIDER POINT OF VIEW</span></div></footer></body></html>'''
 
@@ -92,7 +94,7 @@ def article_path(lang):
 
 def article_card(lang):
  a=ARTICLES[lang]; href=url(article_path(lang))
- return f'<article class="story-card"><a class="story-image" href="{href}" tabindex="-1" aria-hidden="true"><img src="{url("assets/pullman/lobby.jpg")}" width="1284" height="1698" alt="" loading="lazy"></a><div><p class="eyebrow">{TEXT[lang]["nav"][0]} · {TEXT[lang]["nav"][1]}</p><h2><a href="{href}">{escape(a["title"])}</a></h2><p>{escape(a["desc"])}</p><a class="textlink" href="{href}">{"Читать историю" if lang=="ru" else "Die Geschichte lesen"} ↗</a></div></article>'
+ return f'<article class="story-card"><a class="story-image" style="display:block;position:relative;width:100%;height:0;padding-bottom:100%;overflow:hidden" href="{href}" tabindex="-1" aria-hidden="true"><img style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover" src="{url("assets/pullman/lobby.jpg")}" width="1284" height="1698" alt="" loading="lazy"></a><div><p class="eyebrow">{TEXT[lang]["nav"][0]} · {TEXT[lang]["nav"][1]}</p><h2><a href="{href}">{escape(a["title"])}</a></h2><p>{escape(a["desc"])}</p><a class="textlink" href="{href}">{"Читать историю" if lang=="ru" else "Die Geschichte lesen"} ↗</a></div></article>'
 
 def article(lang):
  a=ARTICLES[lang]; path=article_path(lang); other='ru' if lang=='de' else 'de'

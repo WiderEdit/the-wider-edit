@@ -14,7 +14,7 @@ def load():
 
 def card(lang, site):
  a=load()[lang]; href=site.url(path(lang))
- return f'<article class="story-card"><a class="story-image beauty-thumb" href="{href}" tabindex="-1" aria-hidden="true"><img src="{site.url("assets/beauty-professional-ai.webp")}" width="1254" height="1254" alt="" loading="lazy"></a><div><p class="eyebrow">{site.TEXT[lang]["nav"][0]}</p><h2><a href="{href}">{escape(a["title"])}</a></h2><p>{escape(a["desc"])}</p><a class="textlink" href="{href}">{"Читать историю" if lang=="ru" else "Den Beitrag lesen"} ↗</a></div></article>'
+ return f'<article class="story-card"><a class="story-image beauty-thumb" style="display:block;position:relative;width:100%;height:0;padding-bottom:100%;overflow:hidden" href="{href}" tabindex="-1" aria-hidden="true"><img style="position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain" src="{site.url("assets/beauty-professional-ai.webp")}" width="1254" height="1254" alt="" loading="lazy"></a><div><p class="eyebrow">{site.TEXT[lang]["nav"][0]}</p><h2><a href="{href}">{escape(a["title"])}</a></h2><p>{escape(a["desc"])}</p><a class="textlink" href="{href}">{"Читать историю" if lang=="ru" else "Den Beitrag lesen"} ↗</a></div></article>'
 
 def render(lang, site):
  a=load()[lang]; other='de' if lang=='ru' else 'ru'; date='26 октября 2026' if lang=='ru' else '26. Oktober 2026'
