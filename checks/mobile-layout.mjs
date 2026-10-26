@@ -73,6 +73,18 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]]) {
         assert(Math.abs(before[i].titleOffset-after[i].titleOffset)<3,'Title shifted after decode');
         assert(after[i].overflow<=2,'Horizontal overflow after decode');
       }
+      if(path==='ru/'||path==='de/') {
+        const badge=page.locator('a.new-badge');
+        assert.equal(await badge.getAttribute('href'),'#new-story-preview');
+        await badge.click();
+        await page.waitForFunction(()=>{
+          const r=document.querySelector('#new-story-preview').getBoundingClientRect();
+          return r.top>=0&&r.top<40;
+        });
+        const cta=await page.locator('#new-story-preview .textlink').boundingBox();
+        assert(cta&&cta.y>=0&&cta.y+cta.height<=844,'Read button must be visible after jump');
+        assert(cta.width>=340,'Mobile read button must fill the card');
+      }
       results.push({engine,path,status:'pass',before,after});
       console.log('PASS',label);
     } catch(error) {

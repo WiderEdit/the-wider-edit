@@ -28,3 +28,10 @@
 .new-badge::before{content:"✦";font-size:17px;line-height:1}
 .latest-featured{padding-top:0}.latest-featured>.eyebrow{margin-bottom:0}.latest-featured .story-card{padding-top:22px}
 @media(max-width:600px){.home-hero{padding-bottom:25px}.latest-featured{padding-top:0}.new-badge{font-size:11px}}
+
+/* Explicit controls for the newest story and article reading. */
+a.new-badge{text-decoration:none;min-height:44px;cursor:pointer}a.new-badge:hover{background:#e9b83f;color:#302600}a.new-badge:focus-visible{outline:3px solid var(--forest);outline-offset:4px}
+.story-preview{scroll-margin-top:24px}.story-preview:focus{outline:none}.story-preview:focus-visible{outline:2px solid var(--olive);outline-offset:8px}
+.story-card .textlink{display:inline-flex;justify-content:center;gap:14px;min-height:48px;max-width:none;padding:12px 22px;margin-top:12px;border:1px solid var(--forest);border-radius:4px;background:var(--forest);color:var(--paper);font-size:14px;font-weight:600;text-align:center}
+.story-card .textlink:hover{background:var(--dark);border-color:var(--dark);color:#fff}.story-card .textlink:focus-visible{outline:3px solid #bd8c25;outline-offset:4px}
+@media(max-width:600px){.story-card .textlink{display:flex;width:100%}}
