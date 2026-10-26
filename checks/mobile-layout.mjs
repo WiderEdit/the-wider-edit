@@ -45,6 +45,12 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]]) {
       await page.locator('.story-card').first().scrollIntoViewIfNeeded();
       // Stylesheet load is render-blocking; wait for the actual square wrapper rule.
       await page.waitForFunction(()=>getComputedStyle(document.querySelector('.story-image')).position==='relative');
+      if(path==='ru/'||path==='de/') {
+        assert.equal(await page.locator('.hero-art').count(),0,'Decorative hero returned');
+        assert.equal(await page.locator('.latest .story-card').count(),1,'Homepage needs exactly one newest story');
+        assert(await page.locator('.new-badge').isVisible(),'New story badge is missing');
+        assert(await page.locator('.home-hero').evaluate(el=>el.nextElementSibling?.matches('.latest')), 'Newest story must follow signature intro');
+      }
       const before=await geometry(page);
       assert(before.length>0,'No story cards found');
       for(const g of before) {
