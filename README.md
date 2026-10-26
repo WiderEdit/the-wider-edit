@@ -15,4 +15,4 @@ The ready-to-publish site is in `docs/`. In **Settings → Pages**, choose **Dep
 
 Impressum is in German and Georgian; Datenschutz is in German. Hosting-related IP processing by GitHub is disclosed. The copyright-law reference concerns the author's right to use a pseudonym, not a blanket exemption from other legal requirements.
 
-See [CONCEPT.md](CONCEPT.md) for launch boundaries and later editorial features. No fictional articles are published in this initial version.
+See [CONCEPT.md](CONCEPT.md) for the blog concept and editorial boundaries, and [SITE_QUALITY.md](SITE_QUALITY.md) for reusable page-creation rules: stable image layout, newest-story placement, clear buttons and post-publication checks. The automated check is defined in [.github/workflows/mobile-layout.yml](.github/workflows/mobile-layout.yml). No fictional articles are published.

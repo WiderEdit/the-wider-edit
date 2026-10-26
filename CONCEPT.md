@@ -20,6 +20,14 @@ Homepage: one most recent article once an approved article exists. Section pages
 
 Octopus, the blog, any future routing bot, and specialists remain independent resources. No Octopus features, account collection, or service funnel are part of this launch. Reassess legal and privacy notices before any commercial or technical expansion.
 
+## Page creation and publication quality
+
+Required reusable layout and interaction rules are maintained in [SITE_QUALITY.md](SITE_QUALITY.md). Read that document before creating or changing pages.
+
+The homepage places one latest approved story immediately after the introduction and Chris West signature, followed by the topic sections. The former decorative study image is omitted. A bright “Новая статья” / “Neuer Beitrag” link scrolls to the story's text preview; a separate prominent reading button opens the full article in the current tab. On mobile the reading button spans the card width.
+
+Reserve image geometry before loading, prevent blank layout gaps and text shifts, preserve the bottom-right AI stamp on generated images, and version changed CSS. Verify the published result after deployment using the browser checks and limitations documented in SITE_QUALITY.md. Reuse these design principles on new resources, adapting their own routes, branding and test configuration.
+
 ## Build and host
 
 Run `python3 build.py`, then `python3 validate.py`. In GitHub Settings → Pages, select Deploy from a branch → main → /docs. The canonical base is `https://wideredit.github.io/the-wider-edit/`. No dependencies or server required. Generated HTML is tracked so the deployed content remains inspectable.
