@@ -24,8 +24,8 @@ for f in pages:
   for attr in ('href','src'):
    link=a.get(attr,'')
    if link.startswith('/the-wider-edit/'):
-    target=root/link.removeprefix('/the-wider-edit/').split('#')[0]
-    if link.endswith('/'): target=target/'index.html'
+    target=root/urlparse(link).path.removeprefix('/the-wider-edit/')
+    if urlparse(link).path.endswith('/'): target=target/'index.html'
     assert target.is_file(),(f,link)
    if tag=='a' and urlparse(link).scheme in ('http','https'):
     assert a.get('target')=='_blank',(f,link)

@@ -5,6 +5,7 @@ from html import escape
 import sys
 import hashlib
 import beauty_pages
+import travel_pages
 
 ROOT = Path(__file__).parent
 OUT = ROOT / 'docs'
@@ -74,7 +75,7 @@ def home(lang):
  t=TEXT[lang]
  cards=''.join(f'<section class="topic"><span class="number">0{i+1}</span><h3>{t["nav"][i]}</h3><p>{t["intros"][i]}</p><a class="textlink" href="{url(lang+"/"+s+"/")}">{t["enter"]}<span aria-hidden="true">↗</span></a></section>' for i,s in enumerate(SLUGS))
  body=f'''<div class="wrap"><section class="hero home-hero"><div class="hero-copy"><p class="eyebrow">{t['kicker']}</p><h1>{t['title']}</h1><p class="lead">{t['description']}</p><div class="signature"><span class="signature-line"></span>Chris West</div></div></section>
-<section class="latest latest-featured" aria-label="{'Последняя публикация' if lang=='ru' else 'Neuester Beitrag'}"><p class="eyebrow"><a class="new-badge" href="#new-story-preview">{'Новая статья' if lang=='ru' else 'Neuer Beitrag'}<span aria-hidden="true">↓</span></a></p>{beauty_pages.card(lang,sys.modules[__name__],preview_id='new-story-preview')}</section>
+<section class="latest latest-featured" aria-label="{'Последняя публикация' if lang=='ru' else 'Neuester Beitrag'}"><p class="eyebrow"><a class="new-badge" href="#new-story-preview">{'Новая статья' if lang=='ru' else 'Neuer Beitrag'}<span aria-hidden="true">↓</span></a></p>{travel_pages.card(lang,sys.modules[__name__],preview_id='new-story-preview')}</section>
 <section class="section-intro"><span class="eyebrow">THE EDIT / 01—03</span><div><h2>{t['sections']}</h2><p>{t['sub']}</p></div></section><div class="topics">{cards}</div>
 </div>
 <aside class="quote"><div class="wrap"><p>{t['quote']}</p><span>{t['qlabel']}</span></div></aside><div class="wrap edition-note"><strong>{t['edition']}</strong><p>{t['ednote']}</p></div>'''
@@ -86,7 +87,7 @@ def section(lang,i):
  body=f'''<div class="wrap"><div class="breadcrumb"><a href="{url(lang+'/')}">{t['home']}</a><span>/</span>{t['nav'][i]}</div><section class="page-hero"><span class="eyebrow">THE EDIT / 0{i+1}</span><h1>{t['nav'][i]}<span class="olive-dot">.</span></h1><p class="lead">{t['intros'][i]}</p></section><section class="empty"><span class="empty-symbol" aria-hidden="true">✳</span><h2>{t['empty']}</h2><p>{t['emptytext']}</p><a class="textlink" href="{url(lang+'/')}">{t['back']}<span aria-hidden="true">←</span></a></section><div class="edition-note"><strong>{t['edition']}</strong><p>{t['ednote']}</p></div></div>'''
  if s in ('business','leisure'):
   start=body.index('<section class="empty">'); end=body.index('</section>',start)+len('</section>')
-  body=body[:start]+'<div class="article-list">'+(beauty_pages.card(lang,sys.modules[__name__]) if s=='business' else '')+article_card(lang)+'</div>'+body[end:]
+  body=body[:start]+'<div class="article-list">'+(beauty_pages.card(lang,sys.modules[__name__]) if s=='business' else travel_pages.card(lang,sys.modules[__name__]))+article_card(lang)+'</div>'+body[end:]
  write(path+'index.html',shell(lang,t['nav'][i],t['intros'][i],body,path,active=s,noindex=s=='health'))
 
 
@@ -138,14 +139,14 @@ def legal():
 
 if __name__ == '__main__':
  for l in TEXT:
-  home(l); about(l); article(l); beauty_pages.render(l,sys.modules[__name__])
+  home(l); about(l); article(l); beauty_pages.render(l,sys.modules[__name__]); travel_pages.render(l,sys.modules[__name__])
   for i in range(3): section(l,i)
  legal()
  write('index.html','''<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>The Wider Edit — RU / DE</title><meta name="description" content="The Wider Edit — личный блог Chris West из Грузии. Ein privater Blog von Chris West aus Georgien."><link rel="canonical" href="https://wideredit.github.io/the-wider-edit/"><link rel="alternate" hreflang="ru" href="https://wideredit.github.io/the-wider-edit/ru/"><link rel="alternate" hreflang="de" href="https://wideredit.github.io/the-wider-edit/de/"><link rel="alternate" hreflang="x-default" href="https://wideredit.github.io/the-wider-edit/"><link rel="stylesheet" href="assets/site.css"><script src="assets/language.js" defer></script></head><body><main class="wrap language-page"><p class="eyebrow">A PERSONAL POINT OF VIEW</p><h1>The Wider Edit.</h1><p>Chris West · Georgia</p><nav aria-label="Language"><a href="ru/" lang="ru">Читать по-русски ↗</a><a href="de/" lang="de">Auf Deutsch lesen ↗</a></nav></main></body></html>''')
  write('assets/language.js',"'use strict';\nconst language=(navigator.language||'ru').toLowerCase().startsWith('de')?'de':'ru';\nlocation.replace(new URL(language+'/',location.href).href);\n")
  write('404.html',shell('ru','Страница не найдена','Эта страница недоступна.',f'<div class="wrap page-hero"><span class="eyebrow">404</span><h1>Здесь чистый лист.</h1><p class="lead">Страница не найдена или больше недоступна.</p><a class="textlink" href="{url("ru/")}">На главную ↗</a></div>','404.html',noindex=True))
  write('.nojekyll','')
- paths=['','ru/','de/','ru/about/','de/about/','impressum/','datenschutz/']+[article_path(l) for l in ARTICLES]+[beauty_pages.path(l) for l in ARTICLES]+[l+'/'+c+'/' for l in ARTICLES for c in ['business','leisure']]
+ paths=['','ru/','de/','ru/about/','de/about/','impressum/','datenschutz/']+[article_path(l) for l in ARTICLES]+[beauty_pages.path(l) for l in ARTICLES]+[travel_pages.path(l) for l in ARTICLES]+[l+'/'+c+'/' for l in ARTICLES for c in ['business','leisure']]
  write('sitemap.xml','<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+ORIGIN+url(p)+'</loc></url>' for p in paths)+'</urlset>')
  write('robots.txt','User-agent: *\nAllow: /\nSitemap: '+ORIGIN+url('sitemap.xml')+'\n')
  print('Built', len(list(OUT.rglob('*.html'))), 'HTML pages')

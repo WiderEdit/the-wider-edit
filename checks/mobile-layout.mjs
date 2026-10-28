@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base='https://wideredit.github.io/the-wider-edit/';
-const paths=['ru/','de/','ru/business/','de/business/'];
+const paths=['ru/','de/','ru/business/','de/business/','ru/leisure/','de/leisure/'];
 const results=[];
 await mkdir('layout-report',{recursive:true});
 let failed=false;
