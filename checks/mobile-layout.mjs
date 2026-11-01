@@ -3,10 +3,27 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base='https://wideredit.github.io/the-wider-edit/';
+const newestSlug='ultraschall-kosmetikgeraete-preis-marketing';
 const paths=['ru/','de/','ru/business/','de/business/','ru/leisure/','de/leisure/'];
 const results=[];
 await mkdir('layout-report',{recursive:true});
 let failed=false;
+
+// A push check can start before Pages finishes deploying. Wait for this article
+// and both homepage cards so the geometry check measures the new publication.
+let ready=false;
+for(let attempt=0;attempt<30;attempt++) {
+  try {
+    const states=await Promise.all(['ru','de'].map(async lang=>{
+      const home=await fetch(base+lang+'/?publication='+newestSlug,{cache:'no-store'});
+      const story=await fetch(base+lang+'/stories/'+newestSlug+'/',{cache:'no-store'});
+      return home.ok&&story.ok&&(await home.text()).includes(newestSlug);
+    }));
+    if(states.every(Boolean)){ready=true;break;}
+  } catch {}
+  await new Promise(resolve=>setTimeout(resolve,8000));
+}
+assert(ready,'New bilingual publication did not become available on GitHub Pages');
 
 async function geometry(page) {
   return page.locator('.story-card').evaluateAll(cards=>cards.map(card=>{
@@ -52,6 +69,10 @@ for(const [engine,type] of [['chromium',chromium],['webkit',webkit]]) {
         assert(await page.locator('.home-hero').evaluate(el=>el.nextElementSibling?.matches('.latest')), 'Newest story must follow signature intro');
       }
       const before=await geometry(page);
+      if(path.endsWith('business/')||path==='ru/'||path==='de/') {
+        const firstHref=await page.locator('.story-card h2 a').first().getAttribute('href');
+        assert(firstHref.endsWith('/stories/'+newestSlug+'/'),'Newest card points to an older article');
+      }
       assert(before.length>0,'No story cards found');
       for(const g of before) {
         assert(Math.abs(g.width-g.height)<3,'Non-square reserved thumbnail '+JSON.stringify(g));
