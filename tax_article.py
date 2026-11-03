@@ -6,6 +6,8 @@ DESC='Как зачёт входного НДС помогал мне плани
 SLUG='avto-v-rassrochku-nds-germaniya'
 PATH=f'ru/stories/{SLUG}/'
 DATE='2026-11-03'
+IMAGE='assets/avto-nds-ru-ai.webp'
+ALT='Тёмно-зелёный автомобиль. Как купить машину и год ездить на ней «бесплатно»?'
 BODY="""Как купить машину и год ездить на ней «бесплатно»? Когда у меня был бизнес в Германии, к концу года у меня всегда возникал один и тот же вопрос: сколько предстоит перечислить в Finanzamt и что для бизнеса всё равно пора купить?
 
 Если машину уже пора менять, зачем откладывать покупку до января? Иногда декабрьская покупка позволяла оставить в бюджете деньги почти на год платежей. Вот как это выглядело у меня.
@@ -24,12 +26,12 @@ BODY="""Как купить машину и год ездить на ней «б
 def card(site, preview=False):
  attr=' id="new-story-preview" tabindex="-1" class="story-preview"' if preview else ''
  href=site.url(PATH)
- return f'<article class="story-card" style="display:block"><div{attr}><p class="eyebrow">Бизнес</p><h2><a href="{href}">{escape(TITLE)}</a></h2><p>{escape(DESC)}</p><a class="textlink" href="{href}">Читать статью ↗</a></div></article>'
+ return f'<article class="story-card"><a class="story-image" style="display:block;position:relative;width:100%;height:0;padding-bottom:100%;overflow:hidden" href="{href}" tabindex="-1" aria-hidden="true"><img style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain" src="{site.url(IMAGE)}" width="1254" height="1254" alt="" loading="lazy"></a><div{attr}><p class="eyebrow">Бизнес</p><h2><a href="{href}">{escape(TITLE)}</a></h2><p>{escape(DESC)}</p><a class="textlink" href="{href}">Читать статью ↗</a></div></article>'
 
 def render(site):
  body=''.join(f'<p>{p}</p>' for p in BODY.split('\n\n'))
- content=f'<div class="wrap"><article class="story"><header class="story-head"><p class="eyebrow"><a href="{site.url("ru/business/")}">Бизнес</a></p><h1>{escape(TITLE)}</h1><p class="story-meta">Chris West · <time datetime="{DATE}">3 ноября 2026</time> · Обновлено: <time datetime="{DATE}">3 ноября 2026</time></p></header><div class="prose story-prose">{body}<p><em>Это мой личный опыт времён жизни в Германии. Суммы приведены для примера. Правовая основа вычета входного НДС — <a href="https://www.gesetze-im-internet.de/ustg_1980/__15.html" target="_blank" rel="noopener noreferrer">§ 15 UStG</a>.</em></p></div></article></div>'
+ content=f'<div class="wrap"><article class="story"><header class="story-head"><p class="eyebrow"><a href="{site.url("ru/business/")}">Бизнес</a></p><h1>{escape(TITLE)}</h1><p class="story-meta">Chris West · <time datetime="{DATE}">3 ноября 2026</time> · Обновлено: <time datetime="{DATE}">3 ноября 2026</time></p></header><figure class="story-photo beauty-photo"><img src="{site.url(IMAGE)}" width="1254" height="1254" alt="{escape(ALT,quote=True)}" fetchpriority="high"><figcaption>Иллюстрация создана с помощью ИИ.</figcaption></figure><div class="prose story-prose">{body}<p><em>Это мой личный опыт времён жизни в Германии. Суммы приведены для примера. Правовая основа вычета входного НДС — <a href="https://www.gesetze-im-internet.de/ustg_1980/__15.html" target="_blank" rel="noopener noreferrer">§ 15 UStG</a>.</em></p></div></article></div>'
  page=site.shell('ru',TITLE,DESC,content,PATH,active='business')
- schema={'@context':'https://schema.org','@type':'BlogPosting','headline':TITLE,'description':DESC,'inLanguage':'ru','datePublished':DATE,'dateModified':DATE,'author':{'@type':'Person','name':'Chris West'},'mainEntityOfPage':site.ORIGIN+site.url(PATH),'articleSection':'Бизнес'}
- page=page.replace('property="og:type" content="website"','property="og:type" content="article"').replace('</head>','<script type="application/ld+json">'+json.dumps(schema,ensure_ascii=False)+'</script></head>')
+ schema={'@context':'https://schema.org','@type':'BlogPosting','headline':TITLE,'description':DESC,'inLanguage':'ru','datePublished':DATE,'dateModified':DATE,'author':{'@type':'Person','name':'Chris West'},'mainEntityOfPage':site.ORIGIN+site.url(PATH),'articleSection':'Бизнес','image':site.ORIGIN+site.url(IMAGE)}
+ page=page.replace('property="og:type" content="website"','property="og:type" content="article"').replace('</head>','<meta property="og:image" content="'+site.ORIGIN+site.url(IMAGE)+'"><script type="application/ld+json">'+json.dumps(schema,ensure_ascii=False)+'</script></head>')
  site.write(PATH+'index.html',page)
