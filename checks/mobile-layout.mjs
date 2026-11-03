@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base='https://wideredit.github.io/the-wider-edit/';
-const newestSlug={ru:'avto-v-rassrochku-nds-germaniya',de:'ultraschall-kosmetikgeraete-preis-marketing'};
+const newestSlug={ru:'avto-v-rassrochku-nds-germaniya',de:'autokauf-finanzierung-vorsteuer'};
 const paths=['ru/','de/','ru/business/','de/business/','ru/leisure/','de/leisure/'];
 const results=[];
 await mkdir('layout-report',{recursive:true});
@@ -15,7 +15,7 @@ let ready=false;
 for(let attempt=0;attempt<30;attempt++) {
   try {
     const states=await Promise.all(['ru','de'].map(async lang=>{
-      const home=await fetch(base+lang+'/?publication='+newestSlug,{cache:'no-store'});
+      const home=await fetch(base+lang+'/?publication='+newestSlug[lang],{cache:'no-store'});
       const story=await fetch(base+lang+'/stories/'+newestSlug[lang]+'/',{cache:'no-store'});
       return home.ok&&story.ok&&(await home.text()).includes(newestSlug[lang]);
     }));
